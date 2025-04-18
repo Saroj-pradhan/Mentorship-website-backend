@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false,
       },
+      profilePic: { type: String, default: '' }
       
     
 });
