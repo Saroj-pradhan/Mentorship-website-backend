@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 
 const port =  process.env.PORT || 3000;
-console.log( process.env.PORT);
+
 
 const {dbconnect } = require('./db/mndb');
 const  userroute  = require('./routes/user');
