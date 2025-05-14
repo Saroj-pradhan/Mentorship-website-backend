@@ -41,9 +41,7 @@ async function exituserS(req,res,next){
 async function exituserL(req,res,next){
  try{
     
- const { id ,password} = req.body; 
- 
-
+ const { id ,password} = req.body;
  
    const user = await users.findOne({ id:id});
    if(user == null){

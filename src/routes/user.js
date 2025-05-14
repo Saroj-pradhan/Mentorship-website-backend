@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 require("dotenv").config({ path:'../env'});  
-const { users,admins } = require('../db/mndb');
+const { users,admins , communitys} = require('../db/mndb');
 const { userMiddleware , exituserS,exituserL} = require('../middlewares/user_middle');
 const jwt = require('jsonwebtoken');
 const jwtpassword = process.env.JWT_SECREAT;
-console.log(jwtpassword);
+
 const bcrypt = require('bcrypt');
 const saltround = 10;
 //signup rotes                              
@@ -61,6 +61,37 @@ router.get('/getstudents', async (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   });
-  
+  //community
+  router.get('/community',async (req,res)=>{
+    try{
+console.log("reached");
+    
+    const community_data = await communitys.find();
+    console.log(community_data);
+    res.json({
+      "data":community_data,
+      "msg":"sucessfull"
+    })
+     }catch(erorr){
+console.log(error);
+res.status(404).json({"msg":"error occured","error":error})
+    }
+    
+  });
+  router.post("/postdata",async (req,res)=>{
+    try{
+      console.log("reached postdata");
+      
+   const {title,descrip,author,tags} = req.body;
+   const singledata = await new communitys({
+    title,descrip,author,tags
+   })
+   await singledata.save();
+
+   res.json({"msg":"succesfully inserted"});
+    }catch(error){
+    res.status(404).json({"msg":"error at server","error":error})
+    }
+  })
 
 module.exports = router;

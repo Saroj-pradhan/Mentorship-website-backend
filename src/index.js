@@ -10,6 +10,7 @@ const port =  process.env.PORT || 3000;
 const {dbconnect } = require('./db/mndb');
 const  userroute  = require('./routes/user');
 const adminroute = require('./routes/admin');
+const communityroute = require("./routes/community");
 // db connection 
 dbconnect();
 // middlewares
@@ -18,11 +19,12 @@ app.use(express.json());
 // routes
 app.use("/user",userroute);
 app.use('/admin',adminroute);
+app.use('/community',communityroute);
 ///
 const io= new Server(server ,{
     cors: {
       // origin: "http://localhost:5173/", // ✅ frontend URL
-      origin: "https://m-connect-ten.vercel.app/",
+      origin: ["https://m-connect-ten.vercel.app/","http://localhost:5173/"],
       methods: ["GET", "POST"]
     }
   });
