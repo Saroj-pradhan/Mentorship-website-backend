@@ -2,28 +2,20 @@ const express = require("express");
 const route = express.Router();
 const {communitys}  = require("../db/mndb");
  route.get('/getpost',async (req,res)=>{
-    try{
-console.log("reached");
-    
+    try{  
     const community_data = await communitys.find();
-    console.log(community_data);
     res.json({
       "data":community_data,
       "msg":"sucessfull"
     }) 
      }catch(error){
-console.log(error);
 res.status(404).json({"msg":"error occured","error":error})
     }
      
   });
   route.post("/postdata",async (req,res)=>{
     try{
-  
-      
    const {title,descrip,author,tags} = req.body;
-
-   
    const singledata = await new communitys({
     title,
     descrip,
